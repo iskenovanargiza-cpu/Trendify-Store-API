@@ -42,18 +42,17 @@ public class ProductsController
         }
     }
 
+
+    //протести этот апи с сомнией с твоим тренером
+    //чтобы в response получить мой стринг product
     @GetMapping("{id}")
     @PreAuthorize("permitAll()")
-    public Product getById(@PathVariable int id )
+    public String getById(@PathVariable int id )
     {
         try
         {
             var product = productDao.getById(id);
-
-            if(product == null)
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-
-            return product;
+            return "product";
         }
         catch(Exception ex)
         {

@@ -7,6 +7,7 @@ import org.yearup.data.ProductDao;
 import org.yearup.models.Category;
 import org.yearup.models.Product;
 
+import java.util.ArrayList;
 import java.util.List;
 
 // add the annotations to make this a REST controller
@@ -30,8 +31,8 @@ public class CategoriesController {
     @GetMapping
     public List<Category> getAllCategories()
     {
+        return  categoryDao.getAllCategories();
         // find and return all categories
-        return null;
     }
 
     // add the appropriate annotation for a get action
