@@ -43,7 +43,7 @@ public class ProductsController
     }
 
 
-    //протести этот апи с сомнией с твоим тренером
+    //протести этот апи с сомнией с тренером
     //чтобы в response получить мой стринг product
     @GetMapping("{id}")
     @PreAuthorize("permitAll()")
