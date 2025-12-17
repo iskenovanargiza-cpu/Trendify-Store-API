@@ -43,7 +43,6 @@ public class CategoriesController {
     @GetMapping("/{id}")
     public Category getCategoryById(@PathVariable int id)
     {
-        // get the category by id
         Category category = categoryDao.getCategoryById(id);
         if (category == null) {
             throw new ResponseStatusException(
@@ -60,7 +59,6 @@ public class CategoriesController {
         return categoryDao.create(category);
 
     }
-
 
     // the url to return all products in category 1 would look like this
     // https://localhost:8080/categories/1/products
@@ -93,12 +91,14 @@ public class CategoriesController {
     // add annotation to ensure that only an ADMIN can call this function
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void updateCategory(@PathVariable int id, @RequestBody Category category)
+    public Category updateCategory(@PathVariable int id, @RequestBody Category newCategory)
     {
-        // update the category by id
-        try
-        {
-            categoryDao.create(category);
+
+        try {
+
+            categoryDao.update(id, newCategory);
+            return newCategory;
+
         }
         catch(Exception ex)
         {

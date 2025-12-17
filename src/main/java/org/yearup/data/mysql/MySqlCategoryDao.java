@@ -95,7 +95,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
     }
 
     @Override
-    public void update(int categoryId, Category category) {
+    public void update(int categoryIdToChange, Category newCategory) {
 
         String query = "UPDATE categories" +
                        " SET name = ?, " +
@@ -105,13 +105,13 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
-            statement.setString(1, category.getName());
-            statement.setString(2, category.getDescription());
-            statement.setInt(3, categoryId);
+            statement.setString(1, newCategory.getName());
+            statement.setString(2, newCategory.getDescription());
+            statement.setInt(3, categoryIdToChange);
 
             int rowsAffected = statement.executeUpdate();
             if (rowsAffected == 0) {
-                System.out.println("No category found with ID " + categoryId);
+                System.out.println("No category found with ID " + categoryIdToChange);
             } else {
                 System.out.println("Category updated successfully.");
             }
