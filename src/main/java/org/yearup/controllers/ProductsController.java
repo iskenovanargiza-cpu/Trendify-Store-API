@@ -47,19 +47,22 @@ public class ProductsController
     //чтобы в response получить мой стринг product
     @GetMapping("{id}")
     @PreAuthorize("permitAll()")
-    public String getById(@PathVariable int id )
+    public Product getById(@PathVariable int id )
     {
         try
         {
             var product = productDao.getById(id);
-            return "product";
+
+            if(product == null)
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
+            return product;
         }
         catch(Exception ex)
         {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
         }
     }
-
     @PostMapping()
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Product addProduct(@RequestBody Product product)
