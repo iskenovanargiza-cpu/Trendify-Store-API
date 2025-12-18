@@ -18,7 +18,7 @@ public class Product
     {
     }
 
-    public Product(int productId, String name, BigDecimal price, int categoryId, String description, String subCategory, int stock, boolean isFeatured, String imageUrl)
+    public Product(int productId, String name, BigDecimal price, Integer categoryId, String description, String subCategory, int stock, boolean isFeatured, String imageUrl)
     {
         this.productId = productId;
         this.name = name;
@@ -61,12 +61,12 @@ public class Product
         this.price = price;
     }
 
-    public int getCategoryId()
+    public Integer getCategoryId()
     {
         return categoryId;
     }
 
-    public void setCategoryId(int categoryId)
+    public void setCategoryId(Integer categoryId)
     {
         this.categoryId = categoryId;
     }

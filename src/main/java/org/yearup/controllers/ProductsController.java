@@ -2,6 +2,7 @@ package org.yearup.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -9,6 +10,7 @@ import org.yearup.models.Product;
 import org.yearup.data.ProductDao;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -34,7 +36,8 @@ public class ProductsController
     {
         try
         {
-            return productDao.search(categoryId, minPrice, maxPrice, subCategory);
+            List<Product> products = productDao.search(categoryId, minPrice, maxPrice, subCategory);
+            return products;
         }
         catch(Exception ex)
         {
