@@ -1,6 +1,7 @@
 package org.yearup.data.mysql;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.yearup.models.Product;
 import org.yearup.data.ProductDao;
 
@@ -10,6 +11,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 @Component
 public class MySqlProductDao extends MySqlDaoBase implements ProductDao
 {
@@ -19,17 +21,16 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
     }
 
     @Override
-    public List<Product> search(Integer categoryId, BigDecimal minPrice, BigDecimal maxPrice, String subCategory)
-    {
+    public List<Product> search(int categoryId, BigDecimal minPrice, BigDecimal maxPrice, String subCategory) {
         List<Product> products = new ArrayList<>();
 
         String sql = "SELECT * FROM products " +
-                "WHERE (category_id = ? OR ? = -1) " +
-                "   AND (price <= ? OR ? = -1) " +
-                //AND (price >= minPrice OR  price <= max.price)
-                "   AND (subcategory = ? OR ? = '') ";
+                     "WHERE (? = -1 OR category_id = ?) " +
+                      "AND (? = -1 OR price >= ?) " +
+                      "AND (? = -1 OR price <= ?) " +
+                      "AND (? = '' OR subcategory = ?) ";
 
-        categoryId = categoryId == null ? -1 : categoryId;
+        categoryId = categoryId <= 0 ? -1 : categoryId;
         minPrice = minPrice == null ? new BigDecimal("-1") : minPrice;
         maxPrice = maxPrice == null ? new BigDecimal("-1") : maxPrice;
         subCategory = subCategory == null ? "" : subCategory;
@@ -41,8 +42,11 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
             statement.setInt(2, categoryId);
             statement.setBigDecimal(3, minPrice);
             statement.setBigDecimal(4, minPrice);
-            statement.setString(5, subCategory);
-            statement.setString(6, subCategory);
+            statement.setBigDecimal(5, maxPrice);
+            statement.setBigDecimal(6, maxPrice);
+
+            statement.setString(7, subCategory);
+            statement.setString(8, subCategory);
 
             ResultSet row = statement.executeQuery();
 
