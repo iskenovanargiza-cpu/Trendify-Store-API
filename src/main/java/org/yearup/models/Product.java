@@ -7,7 +7,7 @@ public class Product
     private int productId;
     private String name;
     private BigDecimal price;
-    private int categoryId;
+    private Integer categoryId;
     private String description;
     private String subCategory;
     private int stock;
